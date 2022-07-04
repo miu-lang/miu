@@ -2,6 +2,11 @@
 
 ## July 4 2022
 
+### Rust interop
+
+- Added some initial notes on [Rust interop](./RustInterop.md),
+  and a [bibliography](./Bibliography.md).
+
 ### Parser
 
 - Started migrating tree-sitter grammar from an older prototype.
