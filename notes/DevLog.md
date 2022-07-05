@@ -1,6 +1,58 @@
 # Development Log
 
+## July 5 2022
+
+### Direction
+
+- It seems like one of the key blockers to progress
+  is understanding the overall architecture
+  that will be needed for Rust interop,
+  and what tradeoffs it will have.
+  (Bunch of these are unknowns, since I'm not very familiar
+  with the architecture of rust-analyzer or rustc.)
+  There are multiple options,
+  as noted in the [Rust interop](./RustInterop.md) doc,
+  but it's not clear which one is the "right" one.
+
+  Perhaps it would be useful to first write down
+  some fake code examples of Rust interop,
+  what the use case for the code example would be,
+  and what the compiler's behavior should be like.
+
+  It would also be useful to spend a few days understanding
+  the overall pipeline in both rustc and rust-analyzer,
+  and making notes for each.
+
+### Rust interop
+
+- Wrote some notes about having a link-dependency on Rustc
+  vs having a pure data dependency
+  by serializing all necessary information "ahead-of-time".
+
+### Rustc exploration
+
+- Spent some time reading code in the `rustc_interface` crate.
+  One of the odd things I noticed is that there is a separate
+  `parallel_compiler` configuration option; without it,
+  the configuration skips using `Send`/`Sync` types
+  (like `Rc` instead of `Arc`).
+  I wonder when that configuration is used,
+  maybe it's for distributed builds?
+
 ## July 4 2022
+
+### Rustc internals
+
+- It seems like Rustc has some internal APIs that can be used.
+  They "try not to break things unnecessarily" according to the
+  docs on [rustc_driver](https://rustc-dev-guide.rust-lang.org/rustc-driver.html).
+  I suspect it's probably best to use Rustc instead of rust-analyzer
+  for the batch compiler,
+  because we need access to backend information anyways.
+  For the IDE compiler, it would make sense to use rust-analyzer. 
+  However, the first thing I'd like to do
+  is test if this concept can even work or not.
+  So it makes sense to try out Rustc first.
 
 ### Rust interop
 

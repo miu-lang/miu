@@ -21,6 +21,81 @@ not on consuming Miu code from Rust.
 3. Compile Rust code to a static library.
 4. Compile Miu code with appropriate ABI
 
+### Variation - link dependency vs pure data dependency
+
+For step 1 "Obtain type signatures + ABIs",
+there are a couple of possible approaches we could take:
+- Have a link dependency on rustc in the main Miu compiler.
+  We would likely reuse some types, methods etc.
+- Have a pure data dependency on rustc. There would be
+  an "ABI generator" wrapper which emits type information
+  as well as ABI information, say as a SQLite database.
+  We'd consume information from the database directly,
+  so there wouldn't be any reuse of types or methods.
+  Any information that is needed needs to be serialized.
+
+Here are the different factors involved:
+- **Build system complexity**: rustc has a complicated build system.
+  If we can minimize the surface area where we interact with it,
+  we are likely to get better build caching.
+  For example, Bazel-ifying rustc's codebase would be a daunting
+  task, but it seems a lot more doable with just rust-analyzer,
+  since it is pure Rust.
+
+  Most people working on Miu wouldn't need to build rustc at all,
+  they can download a prebuilt binary for the "ABI generator."
+- **Architectural concerns**: Separating internal data structures
+  from those used by rustc, gives us more architectural freedom.
+
+  For example, we don't need to worry about
+  any I/O happening behind the scenes
+  within the Rust compiler.
+  rustc also heavily uses thread-local storage,
+  which may be an issue
+  if we want to have more fine-grained concurrency.
+
+  I'm less concerned about this aspect with rust-analyzer,
+  as I think it is written as a "pure function"
+  (but I should double-check to what extent that is true).
+- **Single code path**: One not-uncommon source of bugs in Swiftc
+  used to be differences in behavior when loading information
+  from a pre-compiled swiftmodule vs a swiftinterface.
+  Using in-memory data transfer (with perhaps optional caching
+  via a database) introduces a similar problem
+  where the "same" thing can happen along two different code paths.
+  By funneling all data through a single code path,
+  we'd get more testing for it
+  and eliminate the chances of inconsistent behavior.
+- **Incrementality and pipelining**: By reusing rustc's
+  infrastructure for incremental compilation,
+  it might be easier to get cross-language incremental compilation.
+  Similarly, by reusing that infrastructure,
+  we could potentially have cross-language pipelining
+  (i.e. some Miu code can start compiling
+  while the Rust code hasn't finished compiling).
+  Using a "serialize everything first" approach
+  precludes both of these.
+
+  However, databases do seem to have
+  at least some support for notifications.
+  For example, SQLite has [sqlite3_update_hook](https://www.sqlite.org/c3ref/update_hook.html).
+- **N-step handoff**: Step 1 is described as a
+  "single thing" but with the ability to use polymorphic
+  types from Rust (see below), you need to break apart
+  the "ABI generator" into two steps.
+  1. First generate type definitions for Rust code
+     and use this to type-check Miu code,
+     identifying the specializations needed from rustc.
+  2. Generate ABI information in rustc, and consume
+     that from the Miu compiler.
+  This is more tedious to coordinate across processes
+  than across a linkage boundary.
+
+  Additionally, this is just polymorphic types.
+  I haven't even fully thought through what it would
+  take to get traits to work (e.g. could you implement
+  Rust traits in Miu code?).
+
 ### Alternative approach - generated repr(C) shim
 
 Another option is to create a shim crate
@@ -54,11 +129,11 @@ let points : Vec Point = ...
 
 We need to essentially specialize across the language boundary
 by passing a Miu type to the Rust compiler.
-However, that would likely require changing Rustc internals
+However, that would likely require changing rustc internals
 to a large extent.
 Instead, one possiblity is to synthesize a fake type
 with the same ABI as `Point`,
-have Rustc do the codegen for that.
+have rustc do the codegen for that.
 
 ## Reflecting mandatory monomorphization in types
 
