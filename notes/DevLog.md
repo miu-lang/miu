@@ -1,5 +1,49 @@
 # Development Log
 
+## July 10, 2022
+
+### Architecture
+
+- I was re-reading matklad's blog post on
+  [Three Architectures for a Responsive IDE](./Bibliography.md#three-architectures-for-a-responsive-ide),
+  and thinking about the architecture we want.
+  Ideally, we'd have a simpler architecture than a full
+  blown "query-based" compiler, because it seems harder to reach
+  the level of performance I want with such an architecture,
+  as evidenced by the performance of Rust and Swiftc.
+  None of Hack, Skip, Sorbet or Kentucky Mule follow this architecture.
+- It's not super clear to me why the map-reduce style architecture
+  can't work for something like Rust, with some added indexes.
+  See the notes in the link above.
+
+## July 9 2022
+
+### Build system
+
+- Spent a bunch of time mucking around with Bazel and `rules_rust`
+  to figure out how to build `tree-sitter` from source.
+  Initially, I thought it would be quick (hah!), and nicer
+  because it'd work for all the right platforms (hah! there's
+  a C++ toolchain involved).
+  Couldn't quite get it to work (it'd probably be better
+  to work with smaller examples first).
+  So I scribbled with using `http_file` to download a prebuilt
+  binary. That was still not fully working, but it's probably
+  simpler.
+- While Bazel does seem complicated (adding to the complexity,
+  they're introducing a new packaging system that is experimental
+  in Bazel 5.0.0), it seems like having a good story for incremental
+  building and testing is going to be necessary.
+  Otherwise, what is likely to happen is that we have some
+  homegrown build system which:
+  - Needs to be updated to handle different edge cases,
+    which are already handled by Bazel.
+  - Doesn't handle build caching as well as Bazel
+  - Does not support distributed builds
+  Another "benefit" of using Bazel is just gaining experience with Bazel,
+  which will be helpful for work, and figuring out how a build system
+  for Miu could integrate with Bazel.
+
 ## July 5 2022
 
 ### Direction
