@@ -1,5 +1,50 @@
 # Development Log
 
+## July 16, 2022
+
+### Editor support
+
+- Took a stab at setting up an Emacs major mode for use in Spacemacs,
+  which does syntax highlighting.
+  It was surprisingly simple with the help of the tree-sitter-emacs package,
+  and looking at the code for gleam-lang/gleam-mode.
+  Using Sourcegraph a bunch also helped
+  with searching for code examples
+  involving various elisp functions.
+
+### Grammar
+
+- Spent some more time fiddling with the tree-sitter grammar.
+  Looks like there are one or more bugs with the scanning part,
+  I got a hang on entering a newline after a basic expression
+  like `let x = 10`.
+
+### Build system
+
+- Successfully got a minimal example with Bazel working using a Cargo.lock
+  file, as well as a `build.rs` file (after a bunch of fiddling).
+  It looks like it generates files and declarations on-the-fly,
+  which was tripping me up.
+- It seems like the "right" way to ensure full reproducibility is to use Nix,
+  since Bazel doesn't really have a way of specifying the C++ toolchain that is used.
+  For example, this [blog post by Tweag](https://www.tweag.io/blog/2018-03-15-bazel-nix/)
+  provides a good overview for why they complement each other.
+- Since we're shaving yaks anyways and am not in a rush,
+  might as well spend some time fiddling with Nix?
+
+## July 15, 2022
+
+### Grammar
+
+- Spent some time fiddling with the grammar and resolving ambiguities.
+  On one hand, adding ~all the grammar constructs up front isn't
+  necessarily the best course of action, since the immediate next
+  thing I'll need to do is filter out unsupported constructs
+  until later stages support those.
+  However, it was fun as a distraction. The other aspect is that
+  writing down the grammar makes it clearer what syntax might work
+  and what syntax might not.
+
 ## July 10, 2022
 
 ### Architecture
