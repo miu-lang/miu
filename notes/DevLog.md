@@ -1,5 +1,21 @@
 # Development Log
 
+## July 17, 2022
+
+### Build system
+
+- Did some note-taking and following various Nix tutorials.
+  I think I'm getting a hang of the whole thing a better now
+  after reading tutorials by Tweag and Xe Iaso.
+  Not a fan of having to stage changes to build them with Nix flakes.
+- One of the dependencies is pulling in libiconv which is LGPL.
+  Need to double-check what is going on there (had a build failure
+  because of it earlier). This was a "fun" discovery, presumably,
+  because Nix's sandboxing avoided a dependency on the system libiconv.
+- One thing I don't understand is why my setup isn't doing
+  "full sandboxing." For example, if I run `nix develop`
+  the `$PATH` in the shell includes paths outside of the Nix store.
+
 ## July 16, 2022
 
 ### Editor support
