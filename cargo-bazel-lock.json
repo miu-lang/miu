@@ -1,0 +1,447 @@
+{
+  "checksum": "f6413bd4e9f654b10bfc11a5723151914b66e047d4f60083796c662b13c0e7a7",
+  "crates": {
+    "aho-corasick 0.7.18": {
+      "name": "aho-corasick",
+      "version": "0.7.18",
+      "repository": {
+        "Http": {
+          "url": "https://crates.io/api/v1/crates/aho-corasick/0.7.18/download",
+          "sha256": "1e37cfd5e7657ada45f742d6e99ca5788580b5c529dc78faf11ece6dc702656f"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "aho_corasick",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "include": [
+                "**/*.rs"
+              ],
+              "exclude": []
+            }
+          }
+        }
+      ],
+      "library_target_name": "aho_corasick",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "crate_features": [
+          "default",
+          "std"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "memchr 2.5.0",
+              "target": "memchr"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2018",
+        "version": "0.7.18"
+      },
+      "license": "Unlicense/MIT"
+    },
+    "cc 1.0.73": {
+      "name": "cc",
+      "version": "1.0.73",
+      "repository": {
+        "Http": {
+          "url": "https://crates.io/api/v1/crates/cc/1.0.73/download",
+          "sha256": "2fff2a6927b3bb87f9595d67196a70493f627687a71d87a0d692242c33f58c11"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "cc",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "include": [
+                "**/*.rs"
+              ],
+              "exclude": []
+            }
+          }
+        },
+        {
+          "Binary": {
+            "crate_name": "gcc-shim",
+            "crate_root": "src/bin/gcc-shim.rs",
+            "srcs": {
+              "include": [
+                "**/*.rs"
+              ],
+              "exclude": []
+            }
+          }
+        }
+      ],
+      "library_target_name": "cc",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "edition": "2018",
+        "version": "1.0.73"
+      },
+      "license": "MIT/Apache-2.0"
+    },
+    "direct-cargo-bazel-deps 0.0.1": {
+      "name": "direct-cargo-bazel-deps",
+      "version": "0.0.1",
+      "repository": null,
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "direct_cargo_bazel_deps",
+            "crate_root": ".direct_cargo_bazel_deps.rs",
+            "srcs": {
+              "include": [
+                "**/*.rs"
+              ],
+              "exclude": []
+            }
+          }
+        }
+      ],
+      "library_target_name": "direct_cargo_bazel_deps",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "edition": "2018",
+        "version": "0.0.1"
+      },
+      "license": null
+    },
+    "memchr 2.5.0": {
+      "name": "memchr",
+      "version": "2.5.0",
+      "repository": {
+        "Http": {
+          "url": "https://crates.io/api/v1/crates/memchr/2.5.0/download",
+          "sha256": "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "memchr",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "include": [
+                "**/*.rs"
+              ],
+              "exclude": []
+            }
+          }
+        },
+        {
+          "BuildScript": {
+            "crate_name": "build_script_build",
+            "crate_root": "build.rs",
+            "srcs": {
+              "include": [
+                "**/*.rs"
+              ],
+              "exclude": []
+            }
+          }
+        }
+      ],
+      "library_target_name": "memchr",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "crate_features": [
+          "default",
+          "std"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "memchr 2.5.0",
+              "target": "build_script_build"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2018",
+        "version": "2.5.0"
+      },
+      "build_script_attrs": {
+        "data_glob": [
+          "**"
+        ]
+      },
+      "license": "Unlicense/MIT"
+    },
+    "regex 1.6.0": {
+      "name": "regex",
+      "version": "1.6.0",
+      "repository": {
+        "Http": {
+          "url": "https://crates.io/api/v1/crates/regex/1.6.0/download",
+          "sha256": "4c4eb3267174b8c6c2f654116623910a0fef09c4753f8dd83db29c48a0df988b"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "regex",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "include": [
+                "**/*.rs"
+              ],
+              "exclude": []
+            }
+          }
+        }
+      ],
+      "library_target_name": "regex",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "crate_features": [
+          "aho-corasick",
+          "default",
+          "memchr",
+          "perf",
+          "perf-cache",
+          "perf-dfa",
+          "perf-inline",
+          "perf-literal",
+          "std",
+          "unicode",
+          "unicode-age",
+          "unicode-bool",
+          "unicode-case",
+          "unicode-gencat",
+          "unicode-perl",
+          "unicode-script",
+          "unicode-segment"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "aho-corasick 0.7.18",
+              "target": "aho_corasick"
+            },
+            {
+              "id": "memchr 2.5.0",
+              "target": "memchr"
+            },
+            {
+              "id": "regex-syntax 0.6.27",
+              "target": "regex_syntax"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2018",
+        "version": "1.6.0"
+      },
+      "license": "MIT OR Apache-2.0"
+    },
+    "regex-syntax 0.6.27": {
+      "name": "regex-syntax",
+      "version": "0.6.27",
+      "repository": {
+        "Http": {
+          "url": "https://crates.io/api/v1/crates/regex-syntax/0.6.27/download",
+          "sha256": "a3f87b73ce11b1619a3c6332f45341e0047173771e8b8b73f87bfeefb7b56244"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "regex_syntax",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "include": [
+                "**/*.rs"
+              ],
+              "exclude": []
+            }
+          }
+        }
+      ],
+      "library_target_name": "regex_syntax",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "crate_features": [
+          "default",
+          "unicode",
+          "unicode-age",
+          "unicode-bool",
+          "unicode-case",
+          "unicode-gencat",
+          "unicode-perl",
+          "unicode-script",
+          "unicode-segment"
+        ],
+        "edition": "2018",
+        "version": "0.6.27"
+      },
+      "license": "MIT OR Apache-2.0"
+    },
+    "tree-sitter 0.20.8": {
+      "name": "tree-sitter",
+      "version": "0.20.8",
+      "repository": {
+        "Http": {
+          "url": "https://crates.io/api/v1/crates/tree-sitter/0.20.8/download",
+          "sha256": "268bf3e3ca0c09e5d21b59c2638e12cb6dcf7ea2681250a696a2d0936cb57ba0"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "tree_sitter",
+            "crate_root": "binding_rust/lib.rs",
+            "srcs": {
+              "include": [
+                "**/*.rs"
+              ],
+              "exclude": []
+            }
+          }
+        },
+        {
+          "BuildScript": {
+            "crate_name": "build_script_build",
+            "crate_root": "binding_rust/build.rs",
+            "srcs": {
+              "include": [
+                "**/*.rs"
+              ],
+              "exclude": []
+            }
+          }
+        }
+      ],
+      "library_target_name": "tree_sitter",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "regex 1.6.0",
+              "target": "regex"
+            },
+            {
+              "id": "tree-sitter 0.20.8",
+              "target": "build_script_build"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2018",
+        "version": "0.20.8"
+      },
+      "build_script_attrs": {
+        "data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "cc 1.0.73",
+              "target": "cc"
+            }
+          ],
+          "selects": {}
+        }
+      },
+      "license": "MIT"
+    },
+    "tree-sitter-miu 0.1.0": {
+      "name": "tree-sitter-miu",
+      "version": "0.1.0",
+      "repository": null,
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "tree_sitter_miu",
+            "crate_root": "bindings/rust/lib.rs",
+            "srcs": {
+              "include": [
+                "**/*.rs"
+              ],
+              "exclude": []
+            }
+          }
+        },
+        {
+          "BuildScript": {
+            "crate_name": "build_script_build",
+            "crate_root": "bindings/rust/build.rs",
+            "srcs": {
+              "include": [
+                "**/*.rs"
+              ],
+              "exclude": []
+            }
+          }
+        }
+      ],
+      "library_target_name": "tree_sitter_miu",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "tree-sitter 0.20.8",
+              "target": "tree_sitter"
+            },
+            {
+              "id": "tree-sitter-miu 0.1.0",
+              "target": "build_script_build"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2021",
+        "version": "0.1.0"
+      },
+      "build_script_attrs": {
+        "data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "cc 1.0.73",
+              "target": "cc"
+            }
+          ],
+          "selects": {}
+        }
+      },
+      "license": "MPL-2.0"
+    }
+  },
+  "binary_crates": [
+    "cc 1.0.73"
+  ],
+  "workspace_members": {
+    "direct-cargo-bazel-deps 0.0.1": "",
+    "tree-sitter-miu 0.1.0": "tools/tree-sitter-miu"
+  },
+  "conditions": {}
+}
