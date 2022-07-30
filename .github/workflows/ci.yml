@@ -8,6 +8,30 @@ on:
       - main
 
 jobs:
+  test-nix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install nix
+        uses: cachix/install-nix-action@v16
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Build package
+        run: |
+          set -o pipefail
+          # Keep in sync with flake.nix
+          # Not sure why nix develop --build doesn't work
+          # See also: https://discourse.nixos.org/t/unable-to-build-package-in-nix-shell-or-nix-develop-but-nix-build-or-nix-build-works-fine/15500
+          nix develop --command -- bazel build --crosstool_top=@nixpkgs_config_cc//:toolchain //...
+      - name: Output build failure
+        if: failure()
+        run: |
+          drv=$(grep "For full logs, run" /tmp/nix-build-err.log | grep -oE "/nix/store/.*.drv")
+          nix log $drv
+          echo $drv
+          exit 1
+
   test:
     strategy:
       matrix:
