@@ -1,0 +1,9 @@
+# Genenerated by direnv
+/.direnv/
+
+## Build outputs
+
+# bazel outputs
+/bazel-*
+# cargo output
+/target/
