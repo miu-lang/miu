@@ -32,11 +32,16 @@ nix develop
 
 ## Building
 
-There should generally not be a need to explicitly build code,
-but you can run a build via `cargo` or `bazel`.
+Without Nix, build using:
 
 ```
-bazel build //tools/parser
+bazel build //...
+```
+
+With Nix, build using:
+
+```
+nix build
 ```
 
 ## Updating dependencies
